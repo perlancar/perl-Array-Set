@@ -217,7 +217,7 @@ sub set_intersect {
 This module provides routines for performing set operations on arrays. Set is
 represented as a regular Perl array. All comparison is currently done with C<eq>
 (string comparison) so currently no support for references/objects/undefs. You
-have to make sure that the array does not contain duplicates/undefs.
+have to make sure that the arrays do not contain duplicates/undefs.
 
 Characteristics and differences with other similar modules:
 
