@@ -235,6 +235,12 @@ Characteristics and differences with other similar modules:
 
 =back
 
+B<NOTE: This early release is a pretty direct port/translation from App::setop,
+and is not as optimized as I'd like it to be. More optimizations will be done in
+the future.> If you want more speed, I'd recommend L<Set::Object> (also supports
+references/objects and performing operations on 3+ sets, XS) or simply
+L<List::MoreUtils> (very popular module, offers XS version).
+
 
 =head1 FUNCTIONS
 
@@ -280,6 +286,7 @@ hashref as the first argument for options. See C<set_diff> for known options.
 L<App::setop> to perform set operations on lines of files on the command-line.
 
 L<Array::Utils>, L<Set::Scalar>, L<List::MoreUtils> (C<uniq> for union,
-C<singleton> for symmetric diff)
+C<singleton> for symmetric diff), L<Set::Array>, L<Array::AsObject>,
+L<Set::Object>, L<Set::Tiny>.
 
 =cut
