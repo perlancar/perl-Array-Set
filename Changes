@@ -1,5 +1,13 @@
 Revision history for Array-Set
 
+0.02    2015-11-18 (PERLANCAR)
+
+	- No functional changes.
+
+	- [doc] Add note about performance; mention Set::Array,
+	  Array::AsObject, Set::Object, Set::Tiny.
+
+
 0.01    2015-11-13 (PERLANCAR)
 
         - First release.
