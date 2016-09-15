@@ -176,7 +176,23 @@ sub _doit {
 }
 
 sub set_diff {
-    _doit('diff', @_);
+    my $opts = ref($_[0]) eq 'HASH' ? shift : {};
+    if ($opts->{ignore_case} || $opts->{ignore_blanks}) {
+        _doit('diff', $opts, @_);
+    } else {
+        # fast version, without ib/ic
+        my $set1 = shift;
+        my $res;
+        while (@_) {
+            my %set2 = map { $_=>1 } @{ shift @_ };
+            $res = [];
+            for my $el (@$set1) {
+                push @$res, $el unless $set2{$el};
+            }
+            $set1 = $res;
+        }
+        $res;
+    }
 }
 
 sub set_symdiff {
@@ -188,7 +204,23 @@ sub set_union {
 }
 
 sub set_intersect {
-    _doit('intersect', @_);
+    my $opts = ref($_[0]) eq 'HASH' ? shift : {};
+    if ($opts->{ignore_case} || $opts->{ignore_blanks}) {
+        _doit('intersect', $opts, @_);
+    } else {
+        # fast version, without ib/ic
+        my $set1 = shift;
+        my $res;
+        while (@_) {
+            my %set2 = map { $_=>1 } @{ shift @_ };
+            $res = [];
+            for my $el (@$set1) {
+                push @$res, $el if $set2{$el};
+            }
+            $set1 = $res;
+        }
+        $res;
+    }
 }
 
 1;
@@ -200,7 +232,7 @@ sub set_intersect {
 
  set_diff([1,2,3,4], [2,3,4,5]);            # => [1]
  set_diff([1,2,3,4], [2,3,4,5], [3,4,5,6]); # => [1]
- set_diff({ci=>1}, ["a","b"], ["B","c"]);   # => ["a"]
+ set_diff({ignore_case=>1}, ["a","b"], ["B","c"]);   # => ["a"]
 
  set_symdiff([1,2,3,4], [2,3,4,5]);            # => [1,5]
  set_symdiff([1,2,3,4], [2,3,4,5], [3,4,5,6]); # => [1,6]
@@ -235,11 +267,10 @@ Characteristics and differences with other similar modules:
 
 =back
 
-B<NOTE: This early release is a pretty direct port/translation from App::setop,
-and is not as optimized as I'd like it to be. More optimizations will be done in
-the future.> If you want more speed, I'd recommend L<Set::Object> (also supports
-references/objects and performing operations on 3+ sets, XS) or simply
-L<List::MoreUtils> (very popular module, offers XS version).
+B<NOTE: A couple of operations are not optimized yet. More optimizations will be
+done in the future. See some benchmarks in L<Bencher::Scenarios::ArraySet>
+distribution. I also recommend L<Set::Object> (also supports references/objects,
+XS) or simply L<List::MoreUtils> (very popular module, offers XS version).
 
 
 =head1 FUNCTIONS
