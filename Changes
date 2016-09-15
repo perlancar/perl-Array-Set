@@ -1,5 +1,10 @@
 Revision history for Array-Set
 
+0.04    2016-09-15 (PERLANCAR)
+
+	- [optimize] Delay loading Tie::IxHash until needed.
+
+
 0.03    2016-09-15 (PERLANCAR)
 
 	- [optimize] Provide fast version of diff/intersect when
