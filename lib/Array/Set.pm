@@ -267,8 +267,8 @@ Characteristics and differences with other similar modules:
 
 =back
 
-B<NOTE: A couple of operations are not optimized yet. More optimizations will be
-done in the future. See some benchmarks in L<Bencher::Scenarios::ArraySet>
+B<NOTE:> A couple of operations are not optimized yet. More optimizations will
+be done in the future. See some benchmarks in L<Bencher::Scenarios::ArraySet>
 distribution. I also recommend L<Set::Object> (also supports references/objects,
 XS) or simply L<List::MoreUtils> (very popular module, offers XS version).
 
