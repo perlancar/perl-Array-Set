@@ -7,8 +7,6 @@ use 5.010001;
 use strict;
 use warnings;
 
-use Tie::IxHash;
-
 use Exporter qw(import);
 our @EXPORT_OK = qw(set_diff set_symdiff set_union set_intersect);
 
@@ -22,6 +20,7 @@ sub _doit {
         $opts = {};
     }
 
+    require Tie::IxHash;
     tie my(%res), 'Tie::IxHash';
 
     my $ic  = $opts->{ignore_case};
