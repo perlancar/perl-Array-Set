@@ -181,7 +181,7 @@ sub set_diff {
     } else {
         # fast version, without ib/ic
         my $set1 = shift;
-        my $res;
+        my $res = $set1;
         while (@_) {
             my %set2 = map { $_=>1 } @{ shift @_ };
             $res = [];
@@ -195,11 +195,47 @@ sub set_diff {
 }
 
 sub set_symdiff {
-    _doit('symdiff', @_);
+    my $opts = ref($_[0]) eq 'HASH' ? shift : {};
+    if ($opts->{ignore_case} || $opts->{ignore_blanks}) {
+        _doit('symdiff', $opts, @_);
+    } else {
+        # fast version, without ib/ic
+        my $set1 = shift;
+        my $res = $set1;
+        my %set1;
+        my %set2;
+        while (@_) {
+            my $set2 = shift;
+            $set2{$_} = 1 for @$set2;
+            $res = [];
+            for my $el (@$set1) {
+                push @$res, $el unless $set2{$el};
+            }
+            $set1{$_} = 1 for @$set1;
+            for my $el (@$set2) {
+                push @$res, $el unless $set1{$el};
+            }
+            $set1 = $res;
+        }
+        $res;
+    }
 }
 
 sub set_union {
-    _doit('union', @_);
+    my $opts = ref($_[0]) eq 'HASH' ? shift : {};
+    if ($opts->{ignore_case} || $opts->{ignore_blanks}) {
+        _doit('union', $opts, @_);
+    } else {
+        # fast version, without ib/ic
+        my %mem;
+        my $res = [];
+        while (@_) {
+            for my $el (@{ shift @_ }) {
+                push @$res, $el unless $mem{$el}++;
+            }
+        }
+        $res;
+    }
 }
 
 sub set_intersect {
@@ -209,7 +245,7 @@ sub set_intersect {
     } else {
         # fast version, without ib/ic
         my $set1 = shift;
-        my $res;
+        my $res = $set1;
         while (@_) {
             my %set2 = map { $_=>1 } @{ shift @_ };
             $res = [];
@@ -266,11 +302,6 @@ Characteristics and differences with other similar modules:
 
 =back
 
-B<NOTE:> A couple of operations are not optimized yet. More optimizations will
-be done in the future. See some benchmarks in L<Bencher::Scenarios::ArraySet>
-distribution. I also recommend L<Set::Object> (also supports references/objects,
-XS) or simply L<List::MoreUtils> (very popular module, offers XS version).
-
 
 =head1 FUNCTIONS
 
@@ -312,6 +343,8 @@ hashref as the first argument for options. See C<set_diff> for known options.
 
 
 =head1 SEE ALSO
+
+See some benchmarks in L<Bencher::Scenarios::ArraySet>.
 
 L<App::setop> to perform set operations on lines of files on the command-line.
 
