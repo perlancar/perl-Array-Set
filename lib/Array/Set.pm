@@ -346,10 +346,10 @@ sub set_intersect {
 
 This module provides routines for performing set operations on arrays. Set is
 represented as a regular Perl array. All comparison done with C<eq> (string
-comparison) by default, but if your set contains undef or references, you can
+comparison) by default, but if your set contains references/undef, you can
 enable C<allow_refs> option if you want to support references/undef. You have to
-make sure that the arrays do not contain duplicates/undefs; this module won't
-check that for you.
+make sure that the arrays do not contain duplicates; this module won't check
+that for you.
 
 Characteristics and differences with other similar modules:
 
