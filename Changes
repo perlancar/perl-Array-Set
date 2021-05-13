@@ -1,3 +1,10 @@
+0.061   2021-05-13  Released-By: PERLANCAR; Urgency: low
+
+	- No functional changes.
+
+	- [doc] Fix wording.
+
+
 0.060   2021-05-13  Released-By: PERLANCAR; Urgency: medium
 
 	- Add support for reference/undef values (option allow_refs).
