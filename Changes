@@ -1,3 +1,8 @@
+0.060   2021-05-13  Released-By: PERLANCAR; Urgency: medium
+
+	- Add support for reference/undef values (option allow_refs).
+
+
 0.05    2016-09-16  Released-By: PERLANCAR
 
 	- [optimize] Provide fast version of symdiff/union when
