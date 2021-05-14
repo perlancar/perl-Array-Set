@@ -360,15 +360,23 @@ Characteristics and differences with other similar modules:
 Set is more appropriately implemented using Perl hash, but this module
 specifically wants to support interset operations on arrays.
 
+Underneath, it still uses hash (L<Tie::IxHash>, to be exact) when performing the
+operations to do fast searching of values, at the expense of storage. See links
+to benchmarks in L</SEE ALSO>.
+
 =item * simple functional (non-OO) interface
 
 =item * interset operations accept more than two arguments
+
+For convenience and some performance benefits.
 
 =item * option to do case-insensitive comparison
 
 =item * option to ignore blanks
 
 =item * ordering preserved
+
+Which is the reason one usually uses array in the first place.
 
 =back
 
